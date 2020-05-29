@@ -22,7 +22,9 @@ class ClassUser extends Api {
             "get": { 
                 "params": {
                     "users.is_global_admin": 1,
-                }
+                    "users.id": request.query.user_id
+                },
+                "where": [ ["users.is_global_admin", "users.id"], "users.id" ]
             },
             "add": { 
                 "params": {
@@ -39,7 +41,7 @@ class ClassUser extends Api {
                     "users.is_global_admin": 1
                 }
             }
-        }, UserModel);
+        }, ClassUserModel);
     }
 
 }

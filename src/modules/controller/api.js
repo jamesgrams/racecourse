@@ -29,7 +29,7 @@ class Api extends Controller {
      * Add fields to the database.
      */
     async add() {
-        if( await isAllowed() ) {
+        if( await this.isAllowed( "add" ) ) {
             let errorMessage = false;
             try {
                 await new this.crudModel( Pool.pool, this.generateParametersMap() ).insert();
@@ -50,11 +50,13 @@ class Api extends Controller {
      * Update fields in the database.
      */
     async update() {
-        if( await isAllowed() ) {
+        if( await this.isAllowed( "update" ) ) {
             let errorMessage = false;
             try {
                 // default where column is id
-                await new this.crudModel( Pool.pool, this.generateParametersMap() ).update();
+                let model = new this.crudModel( Pool.pool, this.generateParametersMap() )
+                if( !model.data[Constants.DEFAULT_WHERE] ) errorMessage = Constants.ERROR_MESSAGES.noId;
+                else await model.update();
             }
             catch(err) {
                 console.log(err);
@@ -72,7 +74,7 @@ class Api extends Controller {
      * Get values for fields in a database.
      */
     async get() {
-        if( await isAllowed() ) {
+        if( await this.isAllowed( "get" ) ) {
             let rows = await new this.crudModel( Pool.pool, this.generateParametersMap( true ) ).fetchAll();
             this.standardRespond( false, {"items": rows} );
         }
@@ -84,12 +86,13 @@ class Api extends Controller {
     /**
      * Delete a record from the database.
      */
-    async update() {
-        if( await isAllowed() ) {
+    async delete() {
+        if( await this.isAllowed( "delete" ) ) {
             let errorMessage = false;
             try {
-                // default where column is id
-                await new this.crudModel( Pool.pool, this.generateParametersMap() ).delete();
+                let model = new this.crudModel( Pool.pool, this.generateParametersMap( true ) )
+                if( !model.data[Constants.DEFAULT_WHERE] ) errorMessage = Constants.ERROR_MESSAGES.noId;
+                else await model.delete();
             }
             catch(err) {
                 console.log(err);
@@ -124,7 +127,7 @@ class Api extends Controller {
         let type = useQuery ? "query" : "body";
         let map = {};
         for( let field of this.crudModel.FIELDS ) {
-            if (this.request[type][field]) map[field] = this.request[type][field];
+            if (this.request[type][field] || this.request[type][field] === 0) map[field] = this.request[type][field];
         }
         return map;
     }

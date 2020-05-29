@@ -37,11 +37,12 @@ class Controller {
 
     /**
      * Determine if the user is allowed to perform the method.
+     * @param {string} callerName - The name of the caller function permissions-wise.
      */
-    async isAllowed() {
+    async isAllowed( callerName ) {
         let auth = new Auth(this.request, this.response);
-        if( !this.authInfo[isAllowed.caller.name] ) return false; // If they do not specify an access object for the method, the method is NOT allowed.
-        let isAllowed = await auth.validateToken(this.authInfo[isAllowed.caller.name].params, this.authInfo[isAllowed.caller.name].where);
+        if( !this.authInfo[callerName] ) return false; // If they do not specify an access object for the method, the method is NOT allowed.
+        let isAllowed = await auth.validateToken(this.authInfo[callerName].params, this.authInfo[callerName].where);
         return isAllowed;
     }
 

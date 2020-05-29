@@ -4,6 +4,7 @@
  */
 
 const Model = require('../model');
+const Constants = require('../../constants');
 
  /**
  * Class representing a MySQL Table.
@@ -18,6 +19,17 @@ class MySQL extends Model {
      */
     constructor( connection, table, data ) {
         super( data );
+
+        // set undefined to null
+        for( let key in data ) {
+            if( typeof data[key] !== 'object' ) {
+                if( data[key] === undefined ) data[key] = null;
+            }
+            else {
+                data[key] = data[key].map( el => el === undefined ? null : el );
+            }
+        }
+
         this.connection = connection;
         this.table = table;
     }
@@ -119,6 +131,7 @@ class MySQL extends Model {
         if( !where || !where.length ) where = Object.keys(this.data).map( (item) => typeof this.data[item] == "object" ? this.data[item].map( (subitem) => item ) : item ).flat();
 
         // values can be an array in which case we do multiple for that item
+        // remember that the order of where matters, it should match the order of the data keys.
         let values = Object.keys(this.data).flat().map( (item) => this.data[item] ).flat();
 
         let table = this.table;
@@ -129,7 +142,7 @@ class MySQL extends Model {
         }
 
         let selectFields = "*";
-        if( customFields ) selectFields = customFields.join(","); 
+        if( customFields ) selectFields = customFields.join(",");
 
         let [rows, fields] = await this.connection.execute( "SELECT " + selectFields + " FROM " + 
             table + 

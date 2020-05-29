@@ -35,7 +35,7 @@ class Html extends Controller {
      * Send a standard response for a request.
      */
     async standardRespond() {
-        if( !await isAllowed() ) {
+        if( !await this.isAllowed( "standardRespond" ) ) {
             this.forbiddenRespond();
         }
         else {

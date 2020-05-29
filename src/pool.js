@@ -10,7 +10,6 @@ const ServerSpecific = require('./server-specific');
  * Class representing a pool.
  */
 class Pool {}
-
 Pool.pool = mysql.createPool(ServerSpecific.MYSQL_CONNECTION).promise();
 
 module.exports = Pool;

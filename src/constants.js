@@ -26,7 +26,6 @@ Constants.API_PREFIX = "/api/";
 Constants.ENDPOINTS = {
     class: Constants.API_PREFIX + "class",
     user: Constants.API_PREFIX + "user",
-    dashboard: Constants.API_PREFIX + "dashboard",
     login: Constants.API_PREFIX + "login",
     classUser: Constants.API_PREFIX + "class-user",
     category: Constants.API_PREFIX + "category"
@@ -60,7 +59,8 @@ Constants.ERROR_MESSAGES = {
     "badInput": "You have entered invalid input. Please try again.",
     "failedConnection": "An error occurred while trying to connect to the database. Please try again.",
     "invalidCredentials": "Invalid credentials.",
-    "missingRequiredFields": "Please fill out all required fields."
+    "missingRequiredFields": "Please fill out all required fields.",
+    "noId": "No identifier specified."
 };
 
 // HTML Doctype
@@ -70,7 +70,7 @@ Constants.HTML_DOCTYPE = "<!DOCTYPE html>";
 Constants.TABLES = {
     classes: "classes",
     users: "users",
-    classesUsers: "classesUsers",
+    classesUsers: "classes_users",
     categories: "categories"
 }
 

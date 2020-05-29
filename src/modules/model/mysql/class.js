@@ -26,8 +26,8 @@ Class.FIELDS = [
     "created",
     "modified",
     "name",
-    "content",
-    "class_id"
+    "start_date",
+    "end_date"
 ];
 
 module.exports = Class;

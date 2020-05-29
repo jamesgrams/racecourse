@@ -1,4 +1,9 @@
-// TODO
+// TODO: error checking start and end dates
+// TODO: if 0 rows deleted or updates, say so
+// first thing - keep going - next up, category tests
+// maybe parse the different types of error to give better error messages.
+// Variables in heroku
+// Get ALL Categories - that should be part of the class get method.
 /***************** Constants and Variables ******************/
 
 const express = require('express');
@@ -12,7 +17,7 @@ const ClassController = require("./modules/controller/api/class");
 const UserController = require("./modules/controller/api/user");
 const ClassUserController = require("./modules/controller/api/class-user");
 const CategoryController = require("./modules/controller/api/category");
-const DashboardController = require("./modules/controller/api/dashboard");
+const AuthController = require("./modules/auth");
 
 /***************** App Endpoints ******************/
 
@@ -54,9 +59,6 @@ app.post(Constants.ENDPOINTS.category, async function(request, response) { new C
 app.put(Constants.ENDPOINTS.category, async function(request, response) { new CategoryController(request, response).update() } );
 app.get(Constants.ENDPOINTS.category, async function(request, response) { new CategoryController(request, response).get() } );
 app.delete(Constants.ENDPOINTS.category, async function(request, response) { new CategoryController(request, response).delete() } );
-
-// ajax - dashboard
-app.get(Constants.ENDPOINTS.dashboard, async function(request, response) { new DashboardController(request, response).get() } );
 
 // ajax - login
 app.post(Constants.ENDPOINTS.login, async function(request, response) { new AuthController(request, response).createToken() } );
