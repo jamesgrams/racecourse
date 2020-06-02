@@ -39,6 +39,7 @@ User.FIELDS = [
     "last",
     "hash",
     "salt",
+    "is_global_admin",
     "password" // not a real field
 ];
 

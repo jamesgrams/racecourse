@@ -21,12 +21,14 @@ CREATE TABLE categories (
     modified timestamp default now() on update now() not null,
     name varchar(100) not null,
     content text,
+    display_order int unsigned not null,
     class_id int unsigned not null,
     constraint pk_categories primary key(id),
     constraint fk_categories_class_id foreign key (class_id) references classes(id)
 );
 
 CREATE INDEX idx_categories_class_id ON categories(class_id);
+CREATE INDEX idx_categories_display_order ON categories(display_order);
 
 CREATE TABLE users (
     id int unsigned not null auto_increment,

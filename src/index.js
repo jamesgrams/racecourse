@@ -1,9 +1,16 @@
-// TODO: error checking start and end dates
 // TODO: if 0 rows deleted or updates, say so
-// first thing - keep going - next up, category tests
 // maybe parse the different types of error to give better error messages.
 // Variables in heroku
-// Get ALL Categories - that should be part of the class get method.
+// start and end dates?
+// user admin
+// Code TODOS
+// prepend file name to js function names
+// one request at a time for the admin
+// delete for admin
+// classes column for users and admin column for users
+// field requirements
+
+// new page - controller, view, constants, endpoint in this file, css, js, and in minify
 /***************** Constants and Variables ******************/
 
 const express = require('express');
@@ -19,6 +26,11 @@ const ClassUserController = require("./modules/controller/api/class-user");
 const CategoryController = require("./modules/controller/api/category");
 const AuthController = require("./modules/auth");
 
+const LoginController = require("./modules/controller/html/login");
+const DashboardController = require("./modules/controller/html/dashboard");
+const ClassControllerHtml = require("./modules/controller/html/class");
+const AdminController = require("./modules/controller/html/admin");
+
 /***************** App Endpoints ******************/
 
 const app = express();
@@ -27,7 +39,7 @@ const app = express();
 app.use(compression());
 
 // Static directories
-app.use("/assets/", express.static( ServerSpecific.STATIC_APPEND + "assets"));
+app.use("/assets/", express.static( "assets"));
 //app.use("/", express.static( ServerSpecific.STATIC_APPEND + "assets/images/icons"));
 
 // Allow json body parsing
@@ -62,6 +74,12 @@ app.delete(Constants.ENDPOINTS.category, async function(request, response) { new
 
 // ajax - login
 app.post(Constants.ENDPOINTS.login, async function(request, response) { new AuthController(request, response).createToken() } );
+
+// page
+app.get(Constants.PAGES.login.path, async function(request, response) { new LoginController(request, response).standardRespond() } );
+app.get(Constants.PAGES.dashboard.path, async function(request, response) { new DashboardController(request, response).standardRespond() } );
+app.get(Constants.PAGES.class.path, async function(request, response) { new ClassControllerHtml(request, response).standardRespond() } );
+app.get(Constants.PAGES.admin.path, async function(request, response) { new AdminController(request, response).standardRespond() } );
 
 //app.get("*", async function(request, response) { new NotFoundController(request, response).standardRespond() } );
 

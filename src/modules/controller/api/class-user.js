@@ -31,7 +31,7 @@ class ClassUser extends Api {
                     "users.is_global_admin": 1
                 }
             },
-            "update": { 
+            "update": {
                 "params": {
                     "users.is_global_admin": 1
                 }

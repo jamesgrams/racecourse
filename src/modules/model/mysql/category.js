@@ -27,6 +27,7 @@ Category.FIELDS = [
     "modified",
     "name",
     "content",
+    "display_order",
     "class_id"
 ];
 

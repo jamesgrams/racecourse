@@ -16,7 +16,10 @@ Constants.TITLE_APPEND = " | " + Constants.MAIN_NAME;
 
 // These are the paths for the pages
 Constants.PAGES = {
-    login: {"name": "Login", "js": ["/assets/js/login.min.js"], "css": ["/assets/css/login.min.css"], "path": "/login", "description": "Login to RaceCourse"},
+    login: {"name": "Login", "js": ["/assets/js/login.min.js"], "css": ["/assets/css/login.min.css", "/assets/css/form.min.css"], "path": "/login", "description": "Login to RaceCourse"},
+    dashboard: {"name": "Dashboard", "js": ["/assets/js/dashboard.min.js"], "css": ["/assets/css/dashboard.min.css"], "path": "/dashboard", "description": "RaceCourse Dashboard"},
+    class: {"name": "Class", "js": ["/assets/js/class.min.js","https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"], "css": ["/assets/css/class.min.css"], "path": "/class", "description": "RaceCourse Class"},
+    admin: {"name": "Admin", "js": ["/assets/js/admin.min.js"], "css": ["/assets/css/admin.min.css"], "path": "/admin", "description": "RaceCourse Admin"},
     notFound: {"name": "404", "js": [], "css": [], "path": "/404", "description": "404"}
 }
 
@@ -85,6 +88,7 @@ Constants.TOKEN_OPTIONS = {"expiresIn": "2d"};
 Constants.TOKEN_EXPIRES_IN_MS = 172800000;
 // Token cookie
 Constants.TOKEN_COOKIE = "racecourse-token";
+Constants.ID_COOKIE = "racecourse-id";
 
 // Log out button
 Constants.LOG_OUT_BUTTON_TEXT = "Log Out";
@@ -108,6 +112,37 @@ Constants.hexTo32BitHex = function(hex) {
         else newString += String.fromCharCode(sum + 87);
     }
     return newString;
+}
+
+Constants.REDIRECT_PARAM = "r";
+
+// Patterns
+Constants.PATTERNS = {
+    "email": "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$",
+    "phone": "\\(\\d{3}\\)\\s\\d{3}\\s-\\s\\d{4}",
+    "expiration": "(0[123456789]|1[012])\/\\d\\d",
+    "card": "[3456]\\d{3}\\s\\d{4}\\s\\d{4}\\s\\d{4}"
+}
+
+// Form maxlengths
+Constants.DEFAULT_FORM_MAX_LENGTH = 100;
+Constants.EMAIL_MAX_LENGTH = 255;
+Constants.MESSAGE_MAX_LENGTH = 2500;
+Constants.EXPIRATION_DATE_MAX_LENGTH = 5;
+Constants.CREDIT_CARD_MAX_LENGTH = 19;
+Constants.ADDRESS_MAX_LENGTH = 500;
+Constants.PHONE_MAX_LENGTH = 16;
+Constants.GUESTS_MAX_LENGTH = 2;
+Constants.ROOMS_MAX_LENGTH = 1;
+Constants.ZIP_MAX_LENGTH = 20;
+
+// Login Form
+Constants.LOGIN_FORM_TITLE = "Login";
+// Labels for the login form
+Constants.LOGIN_LABELS = {
+    email: "Email",
+    password: "Password",
+    submit: "Login"
 }
 
 module.exports = Constants;

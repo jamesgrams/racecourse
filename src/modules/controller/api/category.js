@@ -6,6 +6,7 @@
 
 const CategoryModel = require('../../model/mysql/category');
 const Api = require('../api');
+const Pool = require('../../../pool');
 
  /**
  * Class representing a Controller for the Category Endpoints
@@ -53,6 +54,27 @@ class Category extends Api {
                 "where": [ ["users.is_global_admin", ["categories.id", "classes_users.is_admin"] ], "users.id" ]
             }
         }, CategoryModel);
+    }
+
+    /**
+     * Update fields in the database.
+     */
+    async update() {
+        this.request.body.class_id = null; // DO NOT allow class id to be set for a category.
+        Api.prototype.update.call(this); // perform update in the superclass
+    }
+
+    /**
+     * Get values for fields in a database.
+     */
+    async get() {
+        if( await this.isAllowed( "get" ) ) {
+            let rows = await new this.crudModel( Pool.pool, this.generateParametersMap( true ) ).fetchAll( null, null, null, null, null, ["display_order"] );
+            this.standardRespond( false, {"items": rows} );
+        }
+        else {
+            this.forbiddenRespond();
+        }
     }
 
 }

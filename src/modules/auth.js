@@ -45,8 +45,12 @@ class Auth {
         
         if(userModel.data.hash) {
             if( crypto.scryptSync(password, userModel.data.salt, Constants.CRYPTO_KEY_LEN).toString("hex") == userModel.data.hash ) {
-                let token = jwt.sign( {"user": userModel.data["id"], "email": userModel.data["email"]}, ServerSpecific.TOKEN_KEY, Constants.TOKEN_OPTIONS );
+                let id = {"user": userModel.data["id"], "email": userModel.data["email"], "is_global_admin": userModel.data["is_global_admin"]};
+                let token = jwt.sign( id, ServerSpecific.TOKEN_KEY, Constants.TOKEN_OPTIONS );
                 this.response.cookie( Constants.TOKEN_COOKIE, token, { maxAge: Constants.TOKEN_EXPIRES_IN_MS} );
+                id.first = userModel.data.first;
+                id.last = userModel.data.last;
+                this.response.cookie( Constants.ID_COOKIE, JSON.stringify(id), { maxAge: Constants.TOKEN_EXPIRES_IN_MS} );
                 this.respondLogin(token);
             }
             else {
@@ -76,11 +80,14 @@ class Auth {
 
     /**
      * Validate the header token.
-     * @param {Object} [params] - An optional object with keys being keys in the users/classes/classesUsers tables and values being
+     * @param {[Object|boolean]} [params] - An optional object with keys being keys in the users/classes/classesUsers tables and values being
      * the expected value, that the user should have a record for in order to validate. (e.g. {"classes.id": 3, "classes_users.is_admin": 1})
+     * If false, allow all requests.
      * @param {Array.<string|Array>} [where] - An array of keys that will be set in the mysql - allows for or.
      */
     async validateToken( params={}, where=null ) {
+        if( params === false ) return true;
+
         let token = this.request.cookies[Constants.TOKEN_COOKIE];
         if( token ) {
             try {
@@ -112,7 +119,6 @@ class Auth {
                 for( let i=0; i<=maxNeeded; i++ ) {
                     related.push(potentialRelations[i]);
                 }
-                console.log(related);
         
                 let rows = await userModel.fetchAll( where, related, ["users.id"]);
 

@@ -1,0 +1,16 @@
+.dashboard {
+    height: calc(100vh - 164px); /* header area and footer area plus any padding */
+    padding: 20px;
+}
+
+.dashboard-box {
+    display: inline-block;
+    width: 168px;
+    height: 90px;
+    text-align: center;
+    padding: 10px;
+    line-height: 90px;
+    cursor: pointer;
+    user-select: none;
+    background-color: #4287f5;
+}

@@ -1,0 +1,22 @@
+.admin {
+    height: calc(100vh - 164px); /* header area and footer area plus any padding */
+    padding: 20px;
+}
+
+.admin table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.admin th {
+    text-align: left;
+}
+
+.admin td {
+    border-top: 2px solid black;
+    padding: 5px;
+}
+
+.admin tr[data-id='new'] {
+    color: grey;
+}

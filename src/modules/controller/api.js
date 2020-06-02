@@ -31,15 +31,17 @@ class Api extends Controller {
     async add() {
         if( await this.isAllowed( "add" ) ) {
             let errorMessage = false;
+            let responseObject = null;
             try {
-                await new this.crudModel( Pool.pool, this.generateParametersMap() ).insert();
+                let id = await new this.crudModel( Pool.pool, this.generateParametersMap() ).insert();
+                responseObject = { "id": id };
             }
             catch(err) {
                 console.log(err);
                 errorMessage = Constants.ERROR_MESSAGES.failedConnection;
             }
 
-            this.standardRespond( errorMessage );
+            this.standardRespond( errorMessage, responseObject );
         }
         else {
             this.forbiddenRespond();

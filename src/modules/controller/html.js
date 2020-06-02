@@ -28,7 +28,7 @@ class Html extends Controller {
      * Respond to a forbidden request.
      */
     forbiddenRespond() {
-        this.response.redirect( Constants.ENDPOINTS.login );
+        this.response.redirect( Constants.PAGES.login.path + "?" + Constants.REDIRECT_PARAM + "=" + encodeURIComponent(this.request.originalUrl) );
     }
 
     /**

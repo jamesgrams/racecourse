@@ -124,10 +124,11 @@ class MySQL extends Model {
      * @param {Array.<String>} customFields - An array of fields that we only want to select. Otherwise, all fields will be selected. An option field of join type can also be used (e.g. "left outer")
      * @param {number} limit - The limit.
      * @param {number} offset - The offset.
+     * @param {Array} orderByFields - The fields to order by.
      * @returns {Promise<Array>} An array containing the matching rows.
      * @throws An exception if there was a problem running the query.
      */
-    async fetchAll( where, related, customFields, limit, offset ) {
+    async fetchAll( where, related, customFields, limit, offset, orderByFields ) {
         if( !where || !where.length ) where = Object.keys(this.data).map( (item) => typeof this.data[item] == "object" ? this.data[item].map( (subitem) => item ) : item ).flat();
 
         // values can be an array in which case we do multiple for that item
@@ -148,6 +149,7 @@ class MySQL extends Model {
             table + 
             (values.length ? " WHERE " + 
             this.constructor.createWhereString( where ) : "") + 
+            (orderByFields ? " ORDER BY " + (orderByFields.join(",")) : "") +
             (limit ? " LIMIT " + limit : "") +
             (offset ? " OFFSET " + offset : ""),
         values );
