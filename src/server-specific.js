@@ -21,4 +21,6 @@ ServerSpecific.PORT = process.env.PORT ? process.env.PORT : 80;
 
 ServerSpecific.TOKEN_KEY = process.env.TOKEN_KEY;
 
+ServerSpecific.TINY_KEY = process.env.TINY_KEY;
+
 module.exports = ServerSpecific;

@@ -3,8 +3,8 @@
 // TODO: a user profile edit?
 // TODO: field requirements - like email validation
 // TODO: custom 404
-// Variables in heroku
-// register tiny mce
+// transparent favicon
+// on delete cascade not working.
 
 // new page - controller, view, constants, endpoint in this file, css, js, and in minify
 /***************** Constants and Variables ******************/

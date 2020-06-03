@@ -3,6 +3,8 @@
  * @author  James Grams
  */
 
+const ServerSpecific = require('./server-specific');
+
 /**
  * Class representing Constants.
  * This file should include any text/media paths the user sees that is not dynamically generated.
@@ -18,7 +20,7 @@ Constants.TITLE_APPEND = " | " + Constants.MAIN_NAME;
 Constants.PAGES = {
     login: {"name": "Login", "js": ["/assets/js/login.min.js"], "css": ["/assets/css/login.min.css", "/assets/css/form.min.css"], "path": "/login", "description": "Login to RaceCourse"},
     dashboard: {"name": "Dashboard", "js": ["/assets/js/dashboard.min.js"], "css": ["/assets/css/dashboard.min.css"], "path": "/", "description": "RaceCourse Dashboard"},
-    class: {"name": "Class", "js": ["/assets/js/class.min.js","https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"], "css": ["/assets/css/class.min.css"], "path": "/class", "description": "RaceCourse Class"},
+    class: {"name": "Class", "js": ["/assets/js/class.min.js","https://cdn.tiny.cloud/1/"+ServerSpecific.TINY_KEY+"/tinymce/5/tinymce.min.js"], "css": ["/assets/css/class.min.css"], "path": "/class", "description": "RaceCourse Class"},
     admin: {"name": "Admin", "js": ["/assets/js/admin.min.js"], "css": ["/assets/css/admin.min.css"], "path": "/admin", "description": "RaceCourse Admin"},
     notFound: {"name": "404", "js": [], "css": [], "path": "/404", "description": "404"}
 }
