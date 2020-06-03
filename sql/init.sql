@@ -19,7 +19,7 @@ CREATE TABLE categories (
     display_order int unsigned not null,
     class_id int unsigned not null,
     constraint pk_categories primary key(id),
-    constraint fk_categories_class_id foreign key (class_id) references classes(id)
+    constraint fk_categories_class_id foreign key (class_id) references classes(id) on delete cascade on update cascade
 );
 
 CREATE INDEX idx_categories_class_id ON categories(class_id);
