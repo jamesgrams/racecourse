@@ -1,7 +1,11 @@
 var LOG_OUT_STRING = "Logout";
+var DEFAULT_ERROR = "Sorry, an error has ocurred.";
+var SAVE_ERROR_MESSAGE = "Your data could not be saved. Please try again.";
+var SAVE_SUCCESSFUL_MESSAGE = "Save Successful";
+var DELETE_SUCCESSFUL_MESSAGE = "Delete Successful";
+var DELETE_FAILED_MESSAGE = "Delete Failed. Please try again.";
 
 var loadedJs = {};
-var defaultError = "Sorry, an error has ocurred.";
 
 window.addEventListener('DOMContentLoaded', function() {
     var pathAndParams = getConsistentPath(location.pathname) + location.search;
@@ -490,6 +494,32 @@ function setUserName( hideName ) {
         document.querySelector(".user-name").innerText = "";
         console.log(err);
     }
+}
+
+/**
+ * Create a toast.
+ * @param {string} message - The message to display in the toast.
+ * @param {string} [type] - The type of toast (success or failure).
+ * @param {boolean} [html] - True if the message is in HTML.
+ */
+function createToast(message, type, html) {
+    var toast = document.createElement("div");
+    toast.classList.add("toast");
+    if( html ) toast.innerHTML = message;
+    else toast.innerText = message;
+    var appendElement = document.querySelector("main");
+    if( !appendElement && (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement) ) appendElement = document.querySelector(".screencast-wrapper");
+    if( !appendElement ) appendElement = document.body;
+    appendElement.appendChild(toast);
+    setTimeout( function() { // Timeout for opacity
+        toast.classList.add("toast-shown");
+        setTimeout( function() { // Timeout until hiding
+            toast.classList.remove("toast-shown");
+            setTimeout( function() { // Timeout until removing
+                toast.parentElement.removeChild(toast);
+            }, 500 ); // Make sure this matches the css
+        }, 4000 )
+    }, 0 ); // Set timeout to add the opacity transition
 }
 
 /**

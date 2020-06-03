@@ -1,5 +1,5 @@
 .admin {
-    height: calc(100vh - 164px); /* header area and footer area plus any padding */
+    min-height: calc(100vh - 164px); /* header area and footer area plus any padding */
     padding: 20px;
 }
 
@@ -17,6 +17,24 @@
     padding: 5px;
 }
 
-.admin tr[data-id='new'] {
+.admin tr[data-id='new'], .admin td[data-default] {
     color: grey;
+}
+
+.admin .registration > div {
+    display: inline-block;
+    padding: 5px;
+    vertical-align: top;
+    margin-right: 20px;
+    width: calc(100% - 30px);
+    font-weight: bold;
+}
+
+.admin .registration > div > div {
+    font-weight: normal;
+    padding: 5px 0;
+}
+
+.admin .registration > div > div button:first-child {
+    margin-left: 5px;
 }

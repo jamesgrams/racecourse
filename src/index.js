@@ -1,14 +1,10 @@
 // TODO: if 0 rows deleted or updates, say so
-// maybe parse the different types of error to give better error messages.
+// TODO: possibly nicer error messages and use server side in admin?
+// TODO: a user profile edit?
+// TODO: field requirements - like email validation
+// TODO: custom 404
 // Variables in heroku
-// start and end dates?
-// user admin
-// Code TODOS
-// prepend file name to js function names
-// one request at a time for the admin
-// delete for admin
-// classes column for users and admin column for users
-// field requirements
+// register tiny mce
 
 // new page - controller, view, constants, endpoint in this file, css, js, and in minify
 /***************** Constants and Variables ******************/
@@ -40,7 +36,7 @@ app.use(compression());
 
 // Static directories
 app.use("/assets/", express.static( "assets"));
-//app.use("/", express.static( ServerSpecific.STATIC_APPEND + "assets/images/icons"));
+app.use("/", express.static( "assets/images/icons"));
 
 // Allow json body parsing
 app.use(express.json());

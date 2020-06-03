@@ -17,7 +17,7 @@ Constants.TITLE_APPEND = " | " + Constants.MAIN_NAME;
 // These are the paths for the pages
 Constants.PAGES = {
     login: {"name": "Login", "js": ["/assets/js/login.min.js"], "css": ["/assets/css/login.min.css", "/assets/css/form.min.css"], "path": "/login", "description": "Login to RaceCourse"},
-    dashboard: {"name": "Dashboard", "js": ["/assets/js/dashboard.min.js"], "css": ["/assets/css/dashboard.min.css"], "path": "/dashboard", "description": "RaceCourse Dashboard"},
+    dashboard: {"name": "Dashboard", "js": ["/assets/js/dashboard.min.js"], "css": ["/assets/css/dashboard.min.css"], "path": "/", "description": "RaceCourse Dashboard"},
     class: {"name": "Class", "js": ["/assets/js/class.min.js","https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"], "css": ["/assets/css/class.min.css"], "path": "/class", "description": "RaceCourse Class"},
     admin: {"name": "Admin", "js": ["/assets/js/admin.min.js"], "css": ["/assets/css/admin.min.css"], "path": "/admin", "description": "RaceCourse Admin"},
     notFound: {"name": "404", "js": [], "css": [], "path": "/404", "description": "404"}
@@ -144,5 +144,12 @@ Constants.LOGIN_LABELS = {
     password: "Password",
     submit: "Login"
 }
+
+// default email used for adding - don't allow to login with it.
+Constants.DEFAULT_EMAIL = "new@grams.family";
+
+Constants.LOGO_PATH = "/assets/images/logo-transparent.png";
+Constants.LOGO_WEBP_PATH = "/assets/images/logo-transparent.webp";
+Constants.LOGO_ALT = "Logo";
 
 module.exports = Constants;

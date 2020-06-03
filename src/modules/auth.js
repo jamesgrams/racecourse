@@ -32,7 +32,7 @@ class Auth {
     async createToken() {
         let email = this.request.body.email;
         let password = this.request.body.password;
-        if( !email || !password ) {
+        if( !email || !password || email == Constants.DEFAULT_EMAIL ) {
             this.respondLogin();
             return;
         }

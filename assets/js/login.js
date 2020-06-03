@@ -13,7 +13,7 @@ function loadLogin() {
     // code to run for each input
     addFormInputEvents( form );
     // form submit
-    var loginLocation = "/dashboard";
+    var loginLocation = "/";
     var redirectParam = new URLSearchParams(window.location.search).get("r");
     if( redirectParam ) {
         loginLocation = decodeURIComponent(redirectParam);

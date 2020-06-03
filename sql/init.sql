@@ -7,13 +7,8 @@ CREATE TABLE classes (
     created timestamp default now(),
     modified timestamp default now() on update now() not null,
     name varchar(100) not null,
-    start_date date,
-    end_date date,
     constraint pk_classes primary key(id)
 );
-
-CREATE INDEX idx_class_start_date ON classes(start_date);
-CREATE INDEX idx_class_end_date ON classes(end_date);
 
 CREATE TABLE categories (
     id int unsigned not null auto_increment,
@@ -53,8 +48,8 @@ CREATE TABLE classes_users (
     class_id int unsigned not null,
     unique(user_id,class_id),
     constraint pk_classes_users primary key(id),
-    constraint fk_classes_users_user_id foreign key (user_id) references users(id),
-    constraint fk_classes_users_class_id foreign key (class_id) references classes(id)
+    constraint fk_classes_users_user_id foreign key (user_id) references users(id) on delete cascade on update cascade,
+    constraint fk_classes_users_class_id foreign key (class_id) references classes(id) on delete cascade on update cascade
 );
 
 CREATE INDEX idx_classes_users_is_admin ON classes_users(is_admin);

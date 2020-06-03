@@ -1,1 +1,1 @@
-.login{height:calc(100vh - 124px)}.login form{transform:translateY(calc(calc(calc(100vh - 124px) / 2) - 50%))}
+.login{min-height:calc(100vh - 124px)}.login form{transform:translateY(calc(calc(calc(100vh - 124px) / 2) - 50%))}

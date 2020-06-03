@@ -5,7 +5,6 @@ var classId;
 var classIsSaving;
 var classNewCategoryCount = 0;
 
-var CATEGORY_SAVE_ERROR_MESSAGE = "Your data could not be saved. Please try again.";
 var CATEGORY_NEW_CATEGORY_DATA = {
     "name": "",
     "id": "new",
@@ -32,7 +31,7 @@ function loadClass() {
     if( isAdmin ) {
         actions.unshift({
             "name": "Save",
-            "action": saveState
+            "action": classSaveState
         });
         actions.unshift({
             "name": "View",
@@ -41,7 +40,6 @@ function loadClass() {
     }
     setActionButtons(actions);
 
-    // TODO what if no id
     makeRequest( "GET", "/api/class", { "id": classInfo.get("id") }, 
     function( data ) {
         
@@ -64,10 +62,9 @@ function loadClass() {
             if( responseObj.errorMessage ) errorMessage = responseObj.errorMessage;
         }
         catch(err) {}
-        // TODO - do something with the error message
+        createToast( errorMessage );
     } );
 
-    // TODO if no id
     makeRequest( "GET", "/api/category", { "class_id": classInfo.get("id") }, 
     function( categoryData ) {
         var categoryItems = JSON.parse(categoryData).items;
@@ -75,7 +72,7 @@ function loadClass() {
             categoryItems.push(CATEGORY_NEW_CATEGORY_DATA);
         }
         for( var i=0; i<categoryItems.length; i++ ) {
-            addCategory(categoryItems[i], isAdmin);
+            classAddCategory(categoryItems[i], isAdmin);
         }
         if( categoryItems.length ) {
             document.querySelector(".categories li").click(); // show the content of the first tab.
@@ -88,14 +85,14 @@ function loadClass() {
             if( responseObj.errorMessage ) errorMessage = responseObj.errorMessage;
         }
         catch(err) {}
-        // TODO - do something with the error message
+        createToast( errorMessage );
     } );
 }
 
 /**
  * Save the current state of the edited class.
  */
-function saveState() {
+function classSaveState() {
     if( classIsSaving ) return;
     classIsSaving = true;
     document.querySelector("header button:nth-child(2)").innerText = "Saving...";
@@ -106,7 +103,7 @@ function saveState() {
     var errorOcurred = false;
 
     makeRequest( "PUT", "/api/class", { "id": classId, "name": titleText }, function() {
-        saveContents();
+        classSaveContents();
         var categoriesOptions = document.querySelectorAll(".categories li");
         var categoriesRequestsLength = categoriesOptions.length;
         
@@ -116,7 +113,10 @@ function saveState() {
                 classIsSaving = false;
                 document.querySelector("header button:nth-child(2)").innerText = "Save";
                 if( errorOcurred ) {
-                    alert(CATEGORY_SAVE_ERROR_MESSAGE);
+                    createToast(SAVE_ERROR_MESSAGE);
+                }
+                else {
+                    createToast(SAVE_SUCCESSFUL_MESSAGE);
                 }
             }
         }
@@ -169,7 +169,7 @@ function saveState() {
         }
 
     }, function() {
-        alert(CATEGORY_SAVE_ERROR_MESSAGE);
+        createToast(SAVE_ERROR_MESSAGE);
     } );
 
 }
@@ -179,7 +179,7 @@ function saveState() {
  * @param {Object} categoryItem - The category item.
  * @param {boolean} isAdmin - True if this is an admin.
  */
-function addCategory( categoryItem, isAdmin ) {
+function classAddCategory( categoryItem, isAdmin ) {
 
     categoryItem = JSON.parse(JSON.stringify(categoryItem));
     if( categoryItem.id == "new" ) {
@@ -216,6 +216,10 @@ function addCategory( categoryItem, isAdmin ) {
             if( prevSibling ) {
                 categoryBox.parentNode.insertBefore( categoryBox, prevSibling );
             }
+            else {
+                var existingBoxes = document.querySelectorAll(".categories li:not([data-id^='new'])");
+                categoryBox.parentNode.insertBefore( categoryBox, existingBoxes[existingBoxes.length-1].nextElementSibling );
+            }
         };
 
         var orderDownButton = document.createElement("button");
@@ -223,8 +227,11 @@ function addCategory( categoryItem, isAdmin ) {
         categoryBox.appendChild(orderDownButton);
         orderDownButton.onclick = function(e) {
             var nextSibling = categoryBox.nextElementSibling;
-            if( nextSibling ) {
+            if( nextSibling && !nextSibling.getAttribute("data-id").match(/^new/) ) {
                 categoryBox.parentNode.insertBefore( categoryBox, nextSibling.nextElementSibling );
+            }
+            else {
+                categoryBox.parentNode.prepend( categoryBox );
             }
         };
         
@@ -236,7 +243,7 @@ function addCategory( categoryItem, isAdmin ) {
 
         if( isAdmin && categoryItem.id.toString().match(/^new/) ) {
             categoryTextBox.oninput = function() {
-                addCategory( CATEGORY_NEW_CATEGORY_DATA, isAdmin );
+                classAddCategory( CATEGORY_NEW_CATEGORY_DATA, isAdmin );
                 categoryTextBox.oninput = null;
                 deleteButton.classList.remove("hidden");
                 orderUpButton.classList.remove("hidden");
@@ -251,7 +258,7 @@ function addCategory( categoryItem, isAdmin ) {
         var id = this.getAttribute("data-id");
         var curSelected = document.querySelector(".categories li.selected");
         if( curSelected && isAdmin ) {
-            saveContents();
+            classSaveContents();
         }
 
         if( isAdmin ) {
@@ -274,7 +281,7 @@ function addCategory( categoryItem, isAdmin ) {
 /**
  * Save the current editor's contents to the in memory hash.
  */
-function saveContents() {
+function classSaveContents() {
     var id = document.querySelector(".categories li.selected").getAttribute("data-id");
     var content = tinymce.activeEditor.getContent();
     classContents[id] = content;

@@ -12,7 +12,7 @@ function loadDashboard() {
 
     var userInfo = JSON.parse( decodeURIComponent (getCookieValue("racecourse-id")) );
     if( !userInfo.user ) {
-        alert(defaultError); 
+        createToast(DEFAULT_ERROR); 
         return;
     }
 
@@ -26,11 +26,25 @@ function loadDashboard() {
     }
     setActionButtons( buttons );
 
-    // TODO what if no user
     makeRequest( "GET", "/api/class-user", { "user_id": userInfo.user }, 
     function( data ) {
         
         var items = JSON.parse(data).items;
+        var requestCount = items.length;
+        var errorOcurred = false;
+        var classes = {}; // this will be sorted to be alphabetical
+        var allDone = function() {
+            requestCount --;
+            if( requestCount == 0 ) {
+                var keys = Object.keys(classes).sort();
+                for( var i=0; i<keys.length; i++ ) {
+                    document.querySelector(".dashboard").appendChild(classes[keys[i]]);
+                }
+                if( errorOcurred ) {
+                    createToast(DEFAULT_ERROR);
+                }
+            }
+        }
         for( var i=0; i<items.length;i++ ) {
 
             (function( item ) {
@@ -43,21 +57,24 @@ function loadDashboard() {
                     classBox.onclick = function() { 
                         directPage("/class?id=" + item.class_id +  (item.is_admin ? "&admin=1" : "") ); 
                     }
-                    document.querySelector(".dashboard").appendChild(classBox);
+                    classes[classJson.items[0].name] = classBox;
+                    allDone();
+                }, function() {
+                    errorOcurred = true;
+                    allDone();
                 } );
             })( items[i] );
-            // TODO error function here?
 
         }
 
     },
     function( data ) {
-        var errorMessage = defaultError;
+        var errorMessage = DEFAULT_ERROR;
         try {
             var responseObj = JSON.parse(data);
             if( responseObj.errorMessage ) errorMessage = responseObj.errorMessage;
         }
         catch(err) {}
-        alert( errorMessage );
+        createToast( errorMessage );
     } );
 }

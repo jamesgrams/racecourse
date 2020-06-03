@@ -1,5 +1,5 @@
 .class {
-    height: calc(100vh - 124px);
+    min-height: calc(100vh - 124px);
 }
 
 .class .class-title {
@@ -36,7 +36,6 @@
     border-left: 0;
     cursor: pointer;
     user-select: none;
-    transition: 0.25s;
 }
 
 .class .categories li.selected,
@@ -44,6 +43,9 @@
     border-left: 2px solid black;
 }
 
-.class .hidden {
-    display: none;
+@media only screen and (max-width: 600px) {
+    .class .content {
+        width: calc(100% - 20px);
+        display: block;
+    }
 }

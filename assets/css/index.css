@@ -55,3 +55,32 @@ header button {
 button {
     cursor: pointer;
 }
+
+.toast {
+    position: absolute;
+    z-index: 1000;
+    top: 10%;
+    padding: 20px;
+    background-color: #4287f5;
+    color: black;
+    border-radius: 25px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.toast-shown {
+    opacity: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+header img {
+    width: 20px;
+    vertical-align: bottom;
+    margin-right: 5px;
+}
