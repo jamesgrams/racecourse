@@ -20,7 +20,7 @@ function loadDashboard() {
         buttons.unshift( {
             "name": "Admin",
             "action": function() {
-                directPage("/admin")
+                directPage("/admin?type=user")
             }
         } );
     }

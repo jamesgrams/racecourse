@@ -36,11 +36,11 @@ function loadAdmin() {
     setActionButtons( [
     {
         "name": "Users",
-        "action": function() { adminLoadTable("/api/user", ADMIN_USER_FIELDS) }
+        "action": function() { directPage("/admin?type=user") }
     },
     {
         "name": "Classes",
-        "action": function() { adminLoadTable("/api/class", ADMIN_CLASS_FIELDS) }
+        "action": function() { directPage("/admin?type=class") }
     },
     {
         "name": LOG_OUT_STRING,
@@ -48,7 +48,14 @@ function loadAdmin() {
     }
     ] );
     adminMakingRequest = false;
-    adminLoadTable("/api/user", ADMIN_USER_FIELDS);
+
+    var type = new URLSearchParams(window.location.search).get("type");
+    if( type == "user" ) {
+        adminLoadTable("/api/user", ADMIN_USER_FIELDS);
+    }
+    else {
+        adminLoadTable("/api/class", ADMIN_CLASS_FIELDS);
+    }
 }
 
 
@@ -73,7 +80,10 @@ function adminLoadTable( endpoint, keys ) {
 
                 for( var i=0; i<keys.length; i++ ) {
                     var th = document.createElement("th");
-                    th.innerText = capitalizeFirstLetter(keys[i].replace(/_/g," "));
+                    var parts = keys[i].split("_");
+                    var newParts = [];
+                    for( var j=0; j<parts.length; j++ ) newParts.push(capitalizeFirstLetter(parts[j]));
+                    th.innerText = newParts.join(" ");
                     tr.appendChild(th);
                 }
                 // create the action header
@@ -132,7 +142,7 @@ function adminCreateRow( item, keys, tbody, endpoint ) {
             });
         }
     }
-    td.appendChild(deleteButton);
+    
     if( endpoint === "/api/user" ) {
         var addClassesButton = document.createElement("button");
         if( item.id == "new" ) addClassesButton.classList.add("hidden");
@@ -281,6 +291,17 @@ function adminCreateRow( item, keys, tbody, endpoint ) {
         }
         td.appendChild(addClassesButton);
     }
+    else {
+        var gotoButton = document.createElement("button");
+        if( item.id == "new" ) gotoButton.classList.add("hidden");
+        gotoButton.innerText = "➡️";
+        gotoButton.onclick = function() {
+            directPage("/class?id=" + gotoButton.parentNode.parentNode.getAttribute("data-id") + "&admin=1");
+        }
+        td.appendChild(gotoButton);
+    }
+
+    td.appendChild(deleteButton);
 
     tr.appendChild(td);
     tbody.appendChild(tr);
