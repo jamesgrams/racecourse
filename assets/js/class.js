@@ -264,7 +264,7 @@ function classAddCategory( categoryItem, isAdmin ) {
         if( isAdmin ) {
             tinyMCE.remove(".content .editor");
             document.querySelector(".editor").innerHTML = classContents[id];
-            tinymce.init({selector: ".editor"});
+            tinymce.init({selector: ".editor",plugins: "link"});
         }
         else {
             document.querySelector(".editor").innerHTML = classContents[id];

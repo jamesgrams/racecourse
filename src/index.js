@@ -39,6 +39,9 @@ app.use("/", express.static( "assets/images/icons"));
 // Allow json body parsing
 app.use(express.json());
 
+// Require HTTPS
+app.use(Constants.requireHTTPS);
+
 // Allow cookie parsing
 app.use(cookieParser());
 
