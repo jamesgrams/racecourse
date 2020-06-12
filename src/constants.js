@@ -152,6 +152,8 @@ Constants.DEFAULT_EMAIL = "new@grams.family";
 
 Constants.LOGO_PATH = "/assets/images/logo-transparent.png";
 Constants.LOGO_WEBP_PATH = "/assets/images/logo-transparent.webp";
+Constants.LOGO_SMALL_PATH = "/assets/images/logo-transparent-small.png";
+Constants.LOGO_SMALL_PATH_WEBP = "/assets/images/logo-transparent-small.webp";
 Constants.LOGO_ALT = "Logo";
 
 // Require HTTPS
