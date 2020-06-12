@@ -1,1 +1,1 @@
-.dashboard{min-height:calc(100vh - 164px);padding:20px}.dashboard-box{display:inline-block;width:168px;height:90px;text-align:center;padding:10px;line-height:90px;cursor:pointer;user-select:none;background-color:#4287f5;margin:10px}
+.dashboard{min-height:calc(100vh - 164px);padding:20px}.dashboard-box{display:inline-block;width:168px;height:90px;text-align:center;padding:10px;line-height:90px;cursor:pointer;user-select:none;background-color:#4287f5;margin:10px}.dashboard-box>span{display:inline-block;vertical-align:middle;line-height:normal}

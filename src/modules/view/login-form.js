@@ -7,6 +7,7 @@ const Constants = require('../../constants');
 const View = require('../view');
 const Input = require('./input');
 const Document = require("../../document");
+const Picture = require("./picture");
 
 /**
  * Class representing a Login Form.
@@ -28,6 +29,12 @@ class Login extends View {
         let form = Document.document.createElement("form");
         form.setAttribute("data-endpoint", Constants.ENDPOINTS.login);
         form.setAttribute("aria-labelledby", "login-title");
+
+        let logoSection = Document.document.createElement("div");
+        logoSection.classList.add("login-logo");
+        let logoPicture = new Picture(Constants.LOGO_PATH, Constants.LOGO_WEBP_PATH, Constants.MAIN_NAME + " " + Constants.LOGO_ALT).generateElement();
+        logoSection.appendChild(logoPicture);
+        form.appendChild(logoSection);
         
         let title = Document.document.createElement("h2");
         title.classList.add("form-title");

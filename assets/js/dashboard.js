@@ -53,7 +53,9 @@ function loadDashboard() {
                     var classBox = document.createElement("div");
                     classBox.classList.add("dashboard-box");
                     var classJson = JSON.parse(classData);
-                    classBox.innerHTML = classJson.items[0].name;
+                    var classNameContainer = document.createElement("span");
+                    classNameContainer.innerHTML = classJson.items[0].name;
+                    classBox.appendChild(classNameContainer);
                     classBox.onclick = function() { 
                         directPage("/class?id=" + item.class_id +  (item.is_admin ? "&admin=1" : "") ); 
                     }
