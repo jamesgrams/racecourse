@@ -21,7 +21,7 @@ var ADMIN_NEW_ROW_VALUES = {
     },
     "/api/class": {
         "id": "new",
-        "name": "New Course"
+        "name": "New Group"
     }
 };
 var ADMIN_PASSWORD_PLACEHOLDER = "*******";
@@ -39,7 +39,7 @@ function loadAdmin() {
         "action": function() { directPage("/admin?type=user") }
     },
     {
-        "name": "Courses",
+        "name": "Groups",
         "action": function() { directPage("/admin?type=class") }
     },
     {
