@@ -21,7 +21,7 @@ var ADMIN_NEW_ROW_VALUES = {
     },
     "/api/class": {
         "id": "new",
-        "name": "New Class"
+        "name": "New Course"
     }
 };
 var ADMIN_PASSWORD_PLACEHOLDER = "*******";
@@ -39,7 +39,7 @@ function loadAdmin() {
         "action": function() { directPage("/admin?type=user") }
     },
     {
-        "name": "Classes",
+        "name": "Courses",
         "action": function() { directPage("/admin?type=class") }
     },
     {
@@ -72,7 +72,8 @@ function adminLoadTable( endpoint, keys ) {
     makeRequest("GET", endpoint, {}, function(data) {
         try {
             var items = JSON.parse(data).items;
-            if( items.length ) {
+
+            if( items ) {
                 keys = keys ? keys : Object.keys( ADMIN_NEW_ROW_VALUES[endpoint] );
                 var thead = document.createElement("thead");
                 var tr = document.createElement("tr");
