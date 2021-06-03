@@ -18,6 +18,7 @@ const ClassController = require("./modules/controller/api/class");
 const UserController = require("./modules/controller/api/user");
 const ClassUserController = require("./modules/controller/api/class-user");
 const CategoryController = require("./modules/controller/api/category");
+const MeetingController = require("./modules/controller/api/meeting");
 const AuthController = require("./modules/auth");
 
 const LoginController = require("./modules/controller/html/login");
@@ -68,6 +69,11 @@ app.post(Constants.ENDPOINTS.category, async function(request, response) { new C
 app.put(Constants.ENDPOINTS.category, async function(request, response) { new CategoryController(request, response).update() } );
 app.get(Constants.ENDPOINTS.category, async function(request, response) { new CategoryController(request, response).get() } );
 app.delete(Constants.ENDPOINTS.category, async function(request, response) { new CategoryController(request, response).delete() } );
+
+// ajax - meeting
+app.post(Constants.ENDPOINTS.meeting, async function(request, response) { new MeetingController(request, response).add() } );
+app.get(Constants.ENDPOINTS.meeting, async function(request, response) { new MeetingController(request, response).get() } );
+app.delete(Constants.ENDPOINTS.meeting, async function(request, response) { new MeetingController(request, response).delete() } );
 
 // ajax - login
 app.post(Constants.ENDPOINTS.login, async function(request, response) { new AuthController(request, response).createToken() } );

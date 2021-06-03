@@ -106,7 +106,8 @@ class Auth {
                 let potentialRelations = [
                     { 'table': 'classes_users', 'localKey': 'users.id', 'foreignKey': 'classes_users.user_id', 'joinType': 'left outer' },
                     { 'table': 'classes', 'localKey': 'classes_users.class_id', 'foreignKey': 'classes.id', 'joinType': 'left outer' },
-                    { 'table': 'categories', 'localKey': 'classes.id', 'foreignKey': 'categories.class_id', 'joinType': 'left outer' }
+                    { 'table': 'categories', 'localKey': 'classes.id', 'foreignKey': 'categories.class_id', 'joinType': 'left outer' },
+                    { 'table': 'meetings', 'localKey': 'classes.id', 'foreignKey': 'meetings.class_id', 'joinType': 'left outer' }
                 ];
                 // determine how many joins are necessary given the security requirements
                 let maxNeeded = 0;

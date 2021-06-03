@@ -27,9 +27,10 @@ class Api extends Controller {
 
     /**
      * Add fields to the database.
+     * @param {boolean} [ignoreAllowed] - Ignore allowed.
      */
-    async add() {
-        if( await this.isAllowed( "add" ) ) {
+    async add( ignoreAllowed ) {
+        if( ignoreAllowed || await this.isAllowed( "add" ) ) {
             let errorMessage = false;
             let responseObject = null;
             try {

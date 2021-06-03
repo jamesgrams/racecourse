@@ -25,7 +25,7 @@ class MySQL extends Model {
             if( typeof data[key] !== 'object' ) {
                 if( data[key] === undefined ) data[key] = null;
             }
-            else {
+            else if( ! (typeof data[key].getMonth === "function" ) ) {
                 data[key] = data[key].map( el => el === undefined ? null : el );
             }
         }
@@ -145,14 +145,15 @@ class MySQL extends Model {
         let selectFields = "*";
         if( customFields ) selectFields = customFields.join(",");
 
-        let [rows, fields] = await this.connection.execute( "SELECT " + selectFields + " FROM " + 
+        let query = "SELECT " + selectFields + " FROM " + 
             table + 
             (values.length ? " WHERE " + 
             this.constructor.createWhereString( where ) : "") + 
             (orderByFields ? " ORDER BY " + (orderByFields.join(",")) : "") +
             (limit ? " LIMIT " + limit : "") +
-            (offset ? " OFFSET " + offset : ""),
-        values );
+            (offset ? " OFFSET " + offset : "");
+        console.log("executing " + query);
+        let [rows, fields] = await this.connection.execute( query, values );
         
         return Promise.resolve(rows);
     }

@@ -55,3 +55,18 @@ CREATE TABLE classes_users (
 CREATE INDEX idx_classes_users_is_admin ON classes_users(is_admin);
 CREATE INDEX idx_classes_users_user_id ON classes_users(user_id);
 CREATE INDEX idx_classes_users_class_id ON classes_users(class_id);
+
+CREATE TABLE meetings (
+    id int unsigned not null auto_increment,
+    created timestamp default now(),
+    modified timestamp default now() on update now() not null,
+    class_id int unsigned not null,
+    start_date timestamp not null,
+    end_date timestamp not null,
+    constraint pk_meetings primary key(id),
+    constraint fk_meetings_class_id foreign key (class_id) references classes(id) on delete cascade on update cascade
+);
+
+CREATE INDEX idx_meetings_class_id ON meetings(class_id);
+CREATE INDEX idx_meetings_start_date ON meetings(start_date);
+CREATE INDEX idx_meetings_end_date ON meetings(end_date);

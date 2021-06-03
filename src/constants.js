@@ -33,7 +33,8 @@ Constants.ENDPOINTS = {
     user: Constants.API_PREFIX + "user",
     login: Constants.API_PREFIX + "login",
     classUser: Constants.API_PREFIX + "class-user",
-    category: Constants.API_PREFIX + "category"
+    category: Constants.API_PREFIX + "category",
+    meeting: Constants.API_PREFIX + "meeting"
 }
 
 // The encoding of the site
@@ -65,7 +66,8 @@ Constants.ERROR_MESSAGES = {
     "failedConnection": "An error occurred while trying to connect to the database. Please try again.",
     "invalidCredentials": "Invalid credentials.",
     "missingRequiredFields": "Please fill out all required fields.",
-    "noId": "No identifier specified."
+    "noId": "No identifier specified.",
+    "dateTaken": "Date already taken."
 };
 
 // HTML Doctype
@@ -76,7 +78,8 @@ Constants.TABLES = {
     classes: "classes",
     users: "users",
     classesUsers: "classes_users",
-    categories: "categories"
+    categories: "categories",
+    meetings: "meetings"
 }
 
 // Default where column
