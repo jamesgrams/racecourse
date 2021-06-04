@@ -25,6 +25,7 @@ const LoginController = require("./modules/controller/html/login");
 const DashboardController = require("./modules/controller/html/dashboard");
 const ClassControllerHtml = require("./modules/controller/html/class");
 const AdminController = require("./modules/controller/html/admin");
+const CalendarController = require("./modules/controller/html/calendar");
 
 /***************** App Endpoints ******************/
 
@@ -83,6 +84,7 @@ app.get(Constants.PAGES.login.path, async function(request, response) { new Logi
 app.get(Constants.PAGES.dashboard.path, async function(request, response) { new DashboardController(request, response).standardRespond() } );
 app.get(Constants.PAGES.class.path, async function(request, response) { new ClassControllerHtml(request, response).standardRespond() } );
 app.get(Constants.PAGES.admin.path, async function(request, response) { new AdminController(request, response).standardRespond() } );
+app.get(Constants.PAGES.calendar.path, async function(request, response) { new CalendarController(request, response).standardRespond() } );
 
 //app.get("*", async function(request, response) { new NotFoundController(request, response).standardRespond() } );
 

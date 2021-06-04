@@ -88,9 +88,10 @@ class Api extends Controller {
 
     /**
      * Delete a record from the database.
+     * @param {boolean} [ignoreAllowed] - Ignore allowed.
      */
-    async delete() {
-        if( await this.isAllowed( "delete" ) ) {
+    async delete( ignoreAllowed ) {
+        if( ignoreAllowed || await this.isAllowed( "delete" ) ) {
             let errorMessage = false;
             try {
                 let model = new this.crudModel( Pool.pool, this.generateParametersMap( true ) )

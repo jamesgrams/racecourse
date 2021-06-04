@@ -5,7 +5,12 @@ window.addEventListener('DOMContentLoaded', loadDashboard);
  */
 function loadDashboard() {
     setUserName();
-    var buttons = [ {
+    var buttons = [ 
+    {
+        "name": "Calendar",
+        "action": function() { directPage("/calendar") }
+    },
+    {
         "name": LOG_OUT_STRING,
         "action": logout
     } ];

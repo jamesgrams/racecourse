@@ -41,7 +41,7 @@
                  "params": {
                      "users.is_global_admin": 1,
                      "classes.id": request.body.class_id,
-                     "users.id": request.body.user_id
+                     "users.id": request.body.user_id // need user id for get
                  },
                  "where": [ ["users.is_global_admin", ["classes.id", "users.id"] ], "users.id" ] // select all users where (is admin or the class id matches what's requested [joined]) and the user column matches the token cookie
             },
@@ -50,7 +50,7 @@
                     "users.is_global_admin": 1,
                     "classes.id": request.query.class_id
                 },
-                "where": [ ["users.is_global_admin", "classes.id"], "users.id" ] // select all users where (is admin or the class id matches what's requested [joined]) and the user column matches the token cookie
+                "where": [ ["users.is_global_admin", "classes.id" ], "users.id" ] // select all users where (is admin or the class id matches what's requested [joined]) and the user column matches the token cookie
             }
          }, MeetingModel);
      }
@@ -122,6 +122,7 @@
                 "meetings.id",
                 "meetings.start_date",
                 "meetings.end_date",
+                "meetings.class_id",
                 "classes.name"
             ] );
             return Promise.resolve(rows);
@@ -140,6 +141,10 @@
                 let startDate = new Date(this.request.body.start_date);
                 let endDate = new Date(this.request.body.end_date);
                 let classId = this.request.body.class_id;
+                if( startDate < Date.now() || endDate < Date.now() ) {
+                    this.standardRespond( Constants.ERROR_MESSAGES.datePast, {} );
+                    return Promise.resolve();
+                }
                 delete this.request.body.start_date;
                 delete this.request.body.end_date;
                 delete this.request.body.class_id;
@@ -153,11 +158,32 @@
                 this.request.body.start_date = startDate;
                 this.request.body.end_date = endDate;
                 this.request.body.class_id = classId;
-                Api.prototype.add.call(this, true); // perform update in the superclass
+                Api.prototype.add.call(this, true); // perform add in the superclass
             }
             catch(err) {
                 this.forbiddenRespond();
             }
+        }
+        else {
+            this.forbiddenRespond();
+        }
+    }
+
+    /**
+     * Delete fields in the database.
+     */
+    async delete() {
+        if( await this.isAllowed( "delete" ) ) {
+            let rows = await new MeetingModel( Pool.pool, this.generateParametersMap(true) ).fetchAll();
+            if( !rows.length ) {
+                this.standardRespond( Constants.ERROR_MESSAGES.couldNotFindRecord );
+                return Promise.resolve();
+            }
+            if( rows[0].start_date < new Date() ) {
+                this.standardRespond( Constants.ERROR_MESSAGES.datePast );
+                return Promise.resolve();
+            }
+            Api.prototype.delete.call(this, true); // perform delete in the superclass
         }
         else {
             this.forbiddenRespond();

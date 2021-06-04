@@ -1,0 +1,52 @@
+.calendar {
+    padding: 20px;
+    min-height: calc(100vh - 164px); /* header area and footer area plus any padding */
+}
+
+.calendar table {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.calendar td {
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    padding: 10px;
+}
+
+.calendar td:hover, .calendar td.taken {
+    background-color: #4287f5;
+    color: white;
+    cursor: pointer;
+}
+
+.calendar td.solid {
+    background-color: grey;
+    color: black;
+    cursor: default;
+}
+
+.calendar td:last-child {
+    border-right: 2px solid black;
+}
+
+.calendar tr:last-child td {
+    border-bottom: 2px solid black;
+}
+
+.calendar th {
+    text-align: left;
+}
+
+.calendar th:first-child {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.calendar tr:first-child th {
+    padding-bottom: 10px;
+}
+
+.calendar #calendar-next-button {
+    float: right;
+}

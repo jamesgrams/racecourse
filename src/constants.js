@@ -22,6 +22,7 @@ Constants.PAGES = {
     dashboard: {"name": "Dashboard", "js": ["/assets/js/dashboard.min.js"], "css": ["/assets/css/dashboard.min.css"], "path": "/", "description": "RaceCourse Dashboard"},
     class: {"name": "Class", "js": ["/assets/js/class.min.js","https://cdn.tiny.cloud/1/"+ServerSpecific.TINY_KEY+"/tinymce/5/tinymce.min.js"], "css": ["/assets/css/class.min.css"], "path": "/class", "description": "RaceCourse Class"},
     admin: {"name": "Admin", "js": ["/assets/js/admin.min.js"], "css": ["/assets/css/admin.min.css"], "path": "/admin", "description": "RaceCourse Admin"},
+    calendar: {"name": "Calendar", "js": ["/assets/js/calendar.min.js"], "css": ["/assets/css/calendar.min.css"], "path": "/calendar", "description": "RaceCourse Calendar"},
     notFound: {"name": "404", "js": [], "css": [], "path": "/404", "description": "404"}
 }
 
@@ -67,7 +68,9 @@ Constants.ERROR_MESSAGES = {
     "invalidCredentials": "Invalid credentials.",
     "missingRequiredFields": "Please fill out all required fields.",
     "noId": "No identifier specified.",
-    "dateTaken": "Date already taken."
+    "dateTaken": "Date already taken.",
+    "datePast": "Date is in the past.",
+    "couldNotFindRecord": "Could not find record"
 };
 
 // HTML Doctype
@@ -152,6 +155,12 @@ Constants.LOGIN_LABELS = {
 
 // default email used for adding - don't allow to login with it.
 Constants.DEFAULT_EMAIL = "new@grams.family";
+
+Constants.CALENDAR_TITLE = "Schedule";
+Constants.CALENDAR_CLASS_LABEL = "Class: ";
+Constants.CALENDAR_CLASS_NAME = "calendar-class";
+Constants.CALENDAR_NEXT_LABEL = "Next Week";
+Constants.CALENDAR_PREVIOUS_LABEL = "Previous Week";
 
 Constants.LOGO_PATH = "/assets/images/logo-transparent.png";
 Constants.LOGO_WEBP_PATH = "/assets/images/logo-transparent.webp";
