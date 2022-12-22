@@ -16,7 +16,7 @@
     "uglify-js": "^3.7.6",
     "uglifycss": "^0.0.29",
     "mysql2": "^2.1.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "cookie-parser": "^1.4.4"
   },
   "engines": {
